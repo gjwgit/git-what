@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # git what Copyright (C) 2017 Andy Balaam, released under GPLv2 or later.
+# 20240904 gjw Updated and tuned.
 
 set -e
 set -u
 
 if git rev-parse --verify develop > /dev/null 2>&1; then
 {
-    MAINBRANCH=develop
+    MAINBRANCH=dev
 }
 elif git rev-parse --verify main > /dev/null 2>&1; then
 {
@@ -51,7 +52,7 @@ function print-commits()
 {
     B="${1}"
 
-    git log --abbrev-commit --pretty=oneline "${MAINBRANCH}..${B}" | while read COMMIT LINE; do
+    git log -5 --abbrev-commit --pretty=oneline "${MAINBRANCH}..${B}" | while read COMMIT LINE; do
         set +u
         EXISTING_BRANCH="${COMMITS[${COMMIT}]}"
         set -u
